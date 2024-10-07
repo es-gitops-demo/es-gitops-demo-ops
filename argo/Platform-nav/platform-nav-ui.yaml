@@ -1,0 +1,15 @@
+apiVersion: integration.ibm.com/v1beta1
+kind: PlatformNavigator
+metadata:
+  name: integration-quickstart
+  namespace: cp4i-demo
+  labels:
+    backup.integration.ibm.com/component: platformnavigator        
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+spec:
+  license:
+    accept: true
+    license: L-JTPV-KYG8TF
+  replicas: 1
+  version: 16.1.0

@@ -1,0 +1,67 @@
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: my-es-admin-password-secret
+  namespace: event-streams
+data:
+  # passw0rd
+  password: cGFzc3cwcmQ=
+type: Opaque
+---
+apiVersion: eventstreams.ibm.com/v1beta2
+kind: KafkaUser
+metadata:
+  name: es-admin
+  namespace: event-streams
+  labels:
+    app.kubernetes.io/instance: light-insecure
+    eventstreams.ibm.com/cluster: light-insecure
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    # argocd.argoproj.io/sync-wave: "3"    
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: my-es-admin-password-secret
+          key: password
+    # https://strimzi.io/docs/operators/latest/configuring.html#type-KafkaUserScramSha512ClientAuthentication-reference
+    # https://strimzi.io/docs/operators/latest/configuring.html#type-Password-reference
+  authorization:
+    acls:
+      - operations:
+          - Alter
+          - DescribeConfigs
+        resource:
+          type: cluster
+      - operations:
+          - Create
+          - Read
+          - Write
+          - Delete
+          - DescribeConfigs
+          - Alter
+          - AlterConfigs
+        resource:
+          name: '*'
+          patternType: literal
+          type: topic
+      - operations:
+          - Alter
+          - Read
+        resource:
+          name: __schema_
+          patternType: prefix
+          type: topic
+      - operations:
+          - Read
+          - Delete
+        resource:
+          name: '*'
+          patternType: literal
+          type: group
+    type: simple

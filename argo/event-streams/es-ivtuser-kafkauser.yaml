@@ -1,0 +1,55 @@
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: my-es-ivtuser-password-secret
+  namespace: event-streams
+data:
+  # passw0rd
+  password: cGFzc3cwcmQ=
+type: Opaque
+---
+apiVersion: eventstreams.ibm.com/v1beta2
+kind: KafkaUser
+metadata:
+  name: es-ivtuser
+  namespace: event-streams
+  labels:
+    eventstreams.ibm.com/cluster: light-insecure
+    backup.eventstreams.ibm.com/component: kafkauser
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+   # argocd.argoproj.io/sync-wave: "3"
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: my-es-ivtuser-password-secret
+          key: password
+    # https://strimzi.io/docs/operators/latest/configuring.html#type-KafkaUserScramSha512ClientAuthentication-reference
+    # https://strimzi.io/docs/operators/latest/configuring.html#type-Password-reference
+  authorization:
+    acls:
+      - operations:
+          - Read
+          - Write
+        resource:
+          type: topic
+          name: '*'
+          patternType: literal
+      - operations:
+          - Read
+        resource:
+          type: group
+          name: '*'
+          patternType: literal
+      - operations:
+          - Read
+        resource:
+          type: topic
+          name: __schema_
+          patternType: prefix
+    type: simple

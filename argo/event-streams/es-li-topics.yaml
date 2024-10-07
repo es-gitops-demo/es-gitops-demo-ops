@@ -1,0 +1,38 @@
+---
+apiVersion: eventstreams.ibm.com/v1beta2
+kind: KafkaTopic
+metadata:
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "3"
+  namespace: event-streams
+  labels:
+    eventstreams.ibm.com/cluster: light-insecure
+  name: nft.in
+spec:
+  config:
+    min.insync.replicas: '1'
+    retention.ms: '120000'
+  partitions: 1
+  replicas: 1
+  topicName: NFT.IN
+---
+apiVersion: eventstreams.ibm.com/v1beta2
+kind: KafkaTopic
+metadata:
+  annotations:
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
+  namespace: event-streams
+  labels:
+    eventstreams.ibm.com/cluster: light-insecure
+  name: nft.out
+spec:
+  config:
+    min.insync.replicas: '1'
+    retention.ms: '120000'
+  partitions: 1
+  replicas: 1
+  topicName: NFT.OUT
