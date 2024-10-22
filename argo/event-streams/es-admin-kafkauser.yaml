@@ -15,8 +15,8 @@ metadata:
   name: es-admin
   namespace: event-streams
   labels:
-    app.kubernetes.io/instance: light-insecure
-    eventstreams.ibm.com/cluster: light-insecure
+    app.kubernetes.io/instance: development
+    eventstreams.ibm.com/cluster: development
   annotations:
     # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/#skip-dry-run-for-new-custom-resources-types
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true

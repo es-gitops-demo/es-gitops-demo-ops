@@ -1,4 +1,4 @@
-# es-gitops-demo-src
+# es-gitops-for-stu-ben
 
 Here are the yamls that I use for deploying my own events test environment inside IBM on Fyre, which consists of Event Streams, Event Processing, and Flink.
 

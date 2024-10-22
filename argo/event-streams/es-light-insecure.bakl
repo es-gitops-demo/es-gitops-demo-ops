@@ -8,7 +8,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  security:
+security:
     internalTls: NONE
   license:
     accept: true
