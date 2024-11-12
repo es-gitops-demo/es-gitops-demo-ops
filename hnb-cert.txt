@@ -14,7 +14,7 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     path: argo/ibm-cert-manager
-    repoURL: 'https://github.ibm.com/stu-lipshires/es-gitops-for-stu-ben.git'
+    repoURL: 'https://github.com/es-gitops-demo/es-gitops-demo-ops.git'
     targetRevision: main
     directory:
       recurse: true
