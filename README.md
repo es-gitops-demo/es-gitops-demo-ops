@@ -4,7 +4,37 @@ Here are the yamls that I use for deploying my own events test environment insid
 
 The Argo App definitions are in root directory.
 
-I use ArgoCD (Openshift Gitops) for this, and point Argo at a repo on github.ibm.com.
+I use ArgoCD (Openshift Gitops) for this, and point Argo at a repo on github.ibm.com. 
+
+# you need to give argocd authority to create resources in the cluster. I did that by giving Argo cluster-admin auth:
+
+```yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argo-cluster-admin
+  namespace: cp4i-demo
+  uid: 0ac4c49d-343c-4a21-803c-4f611ba43923
+  resourceVersion: '28076584'
+  creationTimestamp: '2024-12-10T14:44:55Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: rbac.authorization.k8s.io/v1
+      time: '2024-12-10T14:44:55Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:roleRef': {}
+        'f:subjects': {}
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+```  
 
 RE: your email about KafkaTopics, I don't personally do topics via argo (I used to, but I've since started packaging my topics up with my events applications to have one self-contained deployable unit "thing"), but I'm sure they'll work just fine. I've just added the file topics.yaml into the repo as an example. The gotchas is to make sure that you have 
 ```yaml

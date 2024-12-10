@@ -1,0 +1,26 @@
+apiVersion: datapower.ibm.com/v1beta3
+kind: DataPowerService
+metadata:
+  labels:
+    backup.datapower.ibm.com/component: datapowerservice
+  name: quickstart
+  namespace: datapower
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"  
+spec:
+  license:
+    accept: true
+    license: L-EYGU-PVGRBC
+    use: nonproduction
+  replicas: 1
+  resources:
+    limits:
+      memory: 4Gi
+    requests:
+      cpu: 1
+      memory: 4Gi
+  users:
+    - accessLevel: privileged
+      name: admin
+      passwordSecret: datapower-admin-credentials
+  version: 10.6-lts

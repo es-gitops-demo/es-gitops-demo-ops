@@ -1,0 +1,10 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: datapower-admin-credentials
+  namespace: datapower
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"  
+data:
+  password: bXlhZG1pbnBhc3N3b3Jk
+type: Opaque
