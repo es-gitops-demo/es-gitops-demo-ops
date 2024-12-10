@@ -1,7 +1,7 @@
 apiVersion: eventstreams.ibm.com/v1beta2
 kind: EventStreams
 metadata:
-  name: prod-3-brokers
+  name: prod1-3-brokers
   labels:
     backup.eventstreams.ibm.com/component: eventstreams
   namespace: event-streams
@@ -51,7 +51,7 @@ spec:
         valueFrom:
           configMapKeyRef:
             key: kafka-metrics-config.yaml
-            name: prod-3-brokers-metrics-config
+            name: prod1-3-brokers-metrics-config
       resources:
         requests:
           memory: 8096Mi
@@ -70,9 +70,9 @@ spec:
         valueFrom:
           configMapKeyRef:
             key: zookeeper-metrics-config.yaml
-            name: prod-3-brokers-metrics-config
+            name: prod1-3-brokers-metrics-config
       storage:
         type: persistent-claim
-        size: 4Gi
+        size: 2Gi
         class: ocs-storagecluster-ceph-rbd
   version: latest
