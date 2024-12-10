@@ -9,19 +9,18 @@ I use ArgoCD (Openshift Gitops) for this, and point Argo at a repo on github.ibm
 # you need to give argocd authority to create resources in the cluster. I did that by giving Argo cluster-admin auth:
 
 ```yaml
-kind: RoleBinding
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: argo-cluster-admin
-  namespace: cp4i-demo
-  uid: 0ac4c49d-343c-4a21-803c-4f611ba43923
-  resourceVersion: '28076584'
-  creationTimestamp: '2024-12-10T14:44:55Z'
+  uid: 01bdccf7-b488-4b9b-9fba-4ffa2d05f779
+  resourceVersion: '28092559'
+  creationTimestamp: '2024-12-10T15:06:43Z'
   managedFields:
     - manager: Mozilla
       operation: Update
       apiVersion: rbac.authorization.k8s.io/v1
-      time: '2024-12-10T14:44:55Z'
+      time: '2024-12-10T15:06:43Z'
       fieldsType: FieldsV1
       fieldsV1:
         'f:roleRef': {}
