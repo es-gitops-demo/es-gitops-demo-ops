@@ -1,0 +1,201 @@
+apiVersion: eventstreams.ibm.com/v1beta2
+kind: EventStreams
+metadata:
+  creationTimestamp: '2024-12-10T16:29:25Z'
+  generation: 1
+  labels:
+    backup.eventstreams.ibm.com/component: eventstreams
+  managedFields:
+    - apiVersion: eventstreams.ibm.com/v1beta2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:backup.eventstreams.ibm.com/component: {}
+        f:spec:
+          .: {}
+          f:adminApi: {}
+          f:adminUI:
+            .: {}
+            f:authentication: {}
+          f:apicurioRegistry: {}
+          f:collector: {}
+          f:license:
+            .: {}
+            f:accept: {}
+            f:license: {}
+            f:use: {}
+          f:restProducer: {}
+          f:strimziOverrides:
+            .: {}
+            f:kafka:
+              .: {}
+              f:authorization:
+                .: {}
+                f:type: {}
+              f:config:
+                .: {}
+                f:default.replication.factor: {}
+                f:inter.broker.protocol.version: {}
+                f:log.cleaner.threads: {}
+                f:min.insync.replicas: {}
+                f:num.io.threads: {}
+                f:num.network.threads: {}
+                f:num.replica.fetchers: {}
+                f:offsets.topic.replication.factor: {}
+              f:listeners: {}
+              f:metricsConfig:
+                .: {}
+                f:type: {}
+                f:valueFrom:
+                  .: {}
+                  f:configMapKeyRef:
+                    .: {}
+                    f:key: {}
+                    f:name: {}
+              f:replicas: {}
+              f:resources:
+                .: {}
+                f:limits:
+                  .: {}
+                  f:cpu: {}
+                  f:memory: {}
+                f:requests:
+                  .: {}
+                  f:cpu: {}
+                  f:memory: {}
+              f:storage:
+                .: {}
+                f:class: {}
+                f:size: {}
+                f:type: {}
+            f:zookeeper:
+              .: {}
+              f:metricsConfig:
+                .: {}
+                f:type: {}
+                f:valueFrom:
+                  .: {}
+                  f:configMapKeyRef:
+                    .: {}
+                    f:key: {}
+                    f:name: {}
+              f:replicas: {}
+              f:storage:
+                .: {}
+                f:class: {}
+                f:size: {}
+                f:type: {}
+          f:version: {}
+      manager: axios
+      operation: Update
+      time: '2024-12-10T16:29:25Z'
+    - apiVersion: eventstreams.ibm.com/v1beta2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:adminUiUrl: {}
+          f:conditions: {}
+          f:customImages: {}
+          f:endpoints: {}
+          f:kafkaListeners: {}
+          f:licenseVersion: {}
+          f:metadata:
+            .: {}
+            f:integrationKeycloak:
+              .: {}
+              f:clientName: {}
+          f:observedGeneration: {}
+          f:phase: {}
+          f:routes:
+            .: {}
+            f:ac-reg-external: {}
+            f:admapi-external: {}
+            f:recapi-external: {}
+            f:ui: {}
+          f:versions:
+            .: {}
+            f:available:
+              .: {}
+              f:channels: {}
+              f:versions: {}
+            f:reconciled: {}
+      manager: fabric8-kubernetes-client
+      operation: Update
+      subresource: status
+      time: '2024-12-10T16:31:59Z'
+  name: prod1-3-brokers
+  namespace: event-streams
+  resourceVersion: '28158658'
+  uid: bd5a6249-9427-4221-8af9-7715f9007f82
+spec:
+  adminApi: {}
+  adminUI:
+    authentication:
+      - type: integrationKeycloak
+  apicurioRegistry: {}
+  collector: {}
+  license:
+    accept: true
+    license: L-JTPV-KYG8TF
+    use: CloudPakForIntegrationNonProduction
+  restProducer: {}
+  strimziOverrides:
+    kafka:
+      authorization:
+        type: simple
+      config:
+        default.replication.factor: 3
+        inter.broker.protocol.version: '3.7'
+        log.cleaner.threads: 6
+        min.insync.replicas: 2
+        num.io.threads: 24
+        num.network.threads: 9
+        num.replica.fetchers: 3
+        offsets.topic.replication.factor: 3
+      listeners:
+        - authentication:
+            type: scram-sha-512
+          name: external
+          port: 9094
+          tls: true
+          type: route
+        - authentication:
+            type: tls
+          name: tls
+          port: 9093
+          tls: true
+          type: internal
+      metricsConfig:
+        type: jmxPrometheusExporter
+        valueFrom:
+          configMapKeyRef:
+            key: kafka-metrics-config.yaml
+            name: prod1-3-brokers-metrics-config
+      replicas: 3
+      resources:
+        limits:
+          cpu: 2000m
+          memory: 8096Mi
+        requests:
+          cpu: 2000m
+          memory: 8096Mi
+      storage:
+        class: ocs-storagecluster-ceph-rbd
+        size: 10Gi
+        type: persistent-claim
+    zookeeper:
+      metricsConfig:
+        type: jmxPrometheusExporter
+        valueFrom:
+          configMapKeyRef:
+            key: zookeeper-metrics-config.yaml
+            name: prod1-3-brokers-metrics-config
+      replicas: 3
+      storage:
+        class: ocs-storagecluster-ceph-rbd
+        size: 4Gi
+        type: persistent-claim
+  version: latest
